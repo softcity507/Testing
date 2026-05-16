@@ -10,20 +10,15 @@ const Men = () => {
     useEffect(() => {
         let isMounted = true;
         const fetchData = async () => {
-            try {
-                const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/category/men`);
-                if (isMounted) {
-                    const sorted = res.data.sort((a, b) => parseInt(b.reviews) - parseInt(a.reviews))
-                    setProducts(sorted);
-                    setLoading(false);
-                }
-            } catch (err) {
-                if (isMounted) {
-                    console.error(`Error while fetching products: ${err.message}`);
-                    setError(err);
-                    setLoading(false);
-                }
-
+            if (isMounted) {
+                const staticData = [
+                    { _id: "m1", img: "/GenInfo/adidas.jpg", title: "Classic Sneakers", sellPrice: 2500, brand: "Adidas", category: "men", mrp: 3000, discount: 15, rating: 4.5, reviews: 120 },
+                    { _id: "m2", img: "/GenInfo/nike.png", title: "Running Shoes", sellPrice: 3200, brand: "Nike", category: "men", mrp: 4000, discount: 20, rating: 4.8, reviews: 300 },
+                    { _id: "m3", img: "/GenInfo/puma.jpg", title: "Sportswear", sellPrice: 1800, brand: "Puma", category: "men", mrp: 2200, discount: 18, rating: 4.2, reviews: 85 },
+                ];
+                const sorted = staticData.sort((a, b) => parseInt(b.reviews) - parseInt(a.reviews))
+                setProducts(sorted);
+                setLoading(false);
             }
         }
         fetchData();

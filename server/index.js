@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import router from "./routes/productRoutes.js";
+import dns from "node:dns/promises";
+
+dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 dotenv.config();
 
@@ -11,6 +14,7 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
+app.use("/api", router);
 
 const PORT = process.env.PORT || 5000;
 
@@ -24,15 +28,23 @@ const connectDB = async () => {
   }
 };
 
-const startServer = async () => {
-  try {
-    await connectDB();
-    app.listen(PORT, () => {
-      console.log(`App is listening on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error(`Error starting server: ${error.message}`);
-    process.exit(1);
-  }
-};
-startServer();
+// const startServer = async () => {
+//   try {
+//     app.listen(PORT, () => {
+//       console.log(`App is listening on port ${PORT}`);
+//     });
+//   } catch (error) {
+//     console.error(`Error starting server: ${error.message}`);
+//     process.exit(1);
+//   }
+// };
+// startServer();
+
+
+
+
+app.listen(PORT, () => {
+  console.log(`App is listening on port ${PORT}`);
+  connectDB();
+
+});
