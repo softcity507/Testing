@@ -10,20 +10,15 @@ const Women = () => {
     useEffect(() => {
         let isMounted = true;
         const fetchData = async () => {
-            try {
-                const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/category/women`);
-                if (isMounted) {
-                    const sorted = res.data.sort((a, b) => parseInt(b.reviews) - parseInt(a.reviews))
-                    setProducts(sorted);
-                    setLoading(false);
-                }
-            } catch (err) {
-                if (isMounted) {
-                    console.error(`Error while fetching products: ${err.message}`);
-                    setError(err);
-                    setLoading(false);
-                }
-
+            if (isMounted) {
+                const staticData = [
+                    { _id: "w1", img: "/GenInfo/skechers.jpg", title: "Comfort Walk", sellPrice: 2800, brand: "Skechers", category: "women", mrp: 3500, discount: 20, rating: 4.6, reviews: 150 },
+                    { _id: "w2", img: "/GenInfo/nike.png", title: "Zoom Training", sellPrice: 3800, brand: "Nike", category: "women", mrp: 4500, discount: 15, rating: 4.9, reviews: 400 },
+                    { _id: "w3", img: "/GenInfo/puma.jpg", title: "Casual Slip-on", sellPrice: 1500, brand: "Puma", category: "women", mrp: 2000, discount: 25, rating: 4.1, reviews: 75 },
+                ];
+                const sorted = staticData.sort((a, b) => parseInt(b.reviews) - parseInt(a.reviews))
+                setProducts(sorted);
+                setLoading(false);
             }
         }
         fetchData();
